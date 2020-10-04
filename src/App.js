@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    advice: '',
+  };
+
+  componentDidMount() {
+    this.fetchAdvice();
+  }
+
+  fetchAdvice = () => {
+    axios
+      .get(
+        `https://api.adviceslip.com/advice/${Math.floor(Math.random() * 100)}`
+      )
+      .then((res) => {
+        const data = JSON.parse(res.data + '}');
+        const { advice } = data.slip;
+        this.setState({ advice });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  render() {
+    const { advice } = this.state;
+    return (
+      <React.Fragment>
+        <div className="container">
+          <div className="generator__container">
+            <h1>{advice}</h1>
+            <button className="btn">Generate</button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
