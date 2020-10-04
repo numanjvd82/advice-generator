@@ -29,14 +29,14 @@ class App extends React.Component {
   render() {
     const { advice } = this.state;
     return (
-      <React.Fragment>
-        <div className="container">
-          <div className="generator__container">
-            <h1>{advice}</h1>
-            <button className="btn">Generate</button>
-          </div>
+      <div className="app">
+        <div className="card">
+          <h1>{advice}</h1>
+          <button className="btn">
+            <span>Generate</span>
+          </button>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
